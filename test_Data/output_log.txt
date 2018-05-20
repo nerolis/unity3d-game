@@ -1,0 +1,34 @@
+Initialize engine version: 5.6.3p1 (9c92e827232b)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 760 (ID=0x1187)
+    Vendor:   NVIDIA
+    VRAM:     2017 MB
+    Driver:   23.21.13.8813
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Kircheis\Documents\game\test_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Kircheis\Documents\game\test_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Kircheis\Documents\game\test_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Kircheis\Documents\game\test_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Kircheis\Documents\game\test_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Kircheis\Documents\game\test_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\Kircheis\Documents\game\test_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\Kircheis\Documents\game\test_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.019 seconds
+Platform assembly: C:\Users\Kircheis\Documents\game\test_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Kircheis\Documents\game\test_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 0.959658 ms
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 3184 -> priority: 1 
+  Thread -> id: 3730 -> priority: 1 
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 6.245475 ms
+
+Unloading 28 unused Assets to reduce memory usage. Loaded Objects now: 313.
+Total: 0.941545 ms (FindLiveObjects: 0.025659 ms CreateObjectMapping: 0.014188 ms MarkObjects: 0.084826 ms  DeleteObjects: 0.816267 ms)
+
