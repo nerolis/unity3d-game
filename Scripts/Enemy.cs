@@ -79,9 +79,12 @@ public class Enemy : MonoBehaviour {
 
         if (Health <= 0)
         {
-      
-            GameObject.Find(gameObject.name + ("SpawnPoint")).GetComponent<EnemyRespawn>().Death = true;
-            Destroy(gameObject);
+            if (gameObject != null)
+
+            {
+                GameObject.Find(gameObject.name + ("SpawnPoint")).GetComponent<EnemyRespawn>().Death = true;
+                Destroy(gameObject);
+            }
         }
     }
 }

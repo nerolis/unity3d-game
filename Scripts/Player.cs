@@ -9,26 +9,42 @@ public class Player : MonoBehaviour {
 
     public GameObject Bullet, StartBullet;
 
-    public  Rigidbody MyBody; 
+    private Vector3 Movement;
 
-    private Vector3   Movement;
+    public  Rigidbody MyBody; 
 
     public Text HealthText, AmmoText;
 
-    private bool Jump;
-
     public float Speed;
 
-    public int Health, JumpForce;
+    private float GroundDistance;
+    Collider Col;
+
+    public int JumpForce;
+
+    public int Health;
 
     public bool CanAttack = true, Reload = false;
     public const int Magazine = 90;
     public int Ammo = 540, CurrentMagazine = 90;
 
+    public GameObject Cam;
+    public GameObject Weapon;
+    public float RotSpeedWeapon;
+
+    Ray ray;
+    RaycastHit hit;
+
     void Start() {
-        MyBody = GetComponent<Rigidbody>();
-        SetHealthText();
+        Cursor.lockState = CursorLockMode.Locked;
+        HealthText.text = "HP: " + Health.ToString();
         AmmoText.text = "Magazine: " + CurrentMagazine.ToString() + "/ Ammo:" + Ammo.ToString();
+
+
+        MyBody = GetComponent<Rigidbody>();
+        Col = GetComponent<Collider>();
+
+        GroundDistance = Col.bounds.extents.y;
     }
 	
 	void Update() {
@@ -36,26 +52,34 @@ public class Player : MonoBehaviour {
         if (Input.GetMouseButton(0))
             StartCoroutine(Fire());
 
-        if (Input.GetKeyUp(KeyCode.Space))
-            Jump = true;
-
-        if (Input.GetKeyUp(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
             StartCoroutine(StartReload());
-	}
- 
+
+        ray = new Ray(Cam.transform.position, Cam.transform.forward);
+
+        Physics.Raycast(ray, out hit);
+
+        Vector3 rot;
+
+        if (hit.collider == null)
+            rot = Weapon.transform.forward;
+
+        else
+            rot = hit.point - Weapon.transform.position;
+
+        Debug.DrawLine(Cam.transform.position, hit.point, Color.red);
+
+        Weapon.transform.rotation = Quaternion.Slerp(Weapon.transform.rotation, Quaternion.LookRotation(rot), RotSpeedWeapon * Time.deltaTime);
+    }
+
     void FixedUpdate() {
         float Right   = Input.GetAxisRaw("Horizontal");
         float Forward = Input.GetAxisRaw("Vertical");
 
-
-        if (Jump)
-        {
-            Jump = false;
-            MyBody.AddForce(0, JumpForce, 0, ForceMode.Impulse);
-        }
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
+            MyBody.AddForce(Vector3.up * JumpForce * 20, ForceMode.Impulse);
 
         Movement.Set(Forward, 0f, Right);
-        AmmoText.text = "Magazine: " + CurrentMagazine.ToString() + "/ Ammo:" + Ammo.ToString();
         MyBody.AddForce(transform.forward * Forward * Speed, ForceMode.Impulse);
         MyBody.AddForce(transform.right   * Right   * Speed, ForceMode.Impulse);
     }
@@ -97,21 +121,25 @@ public class Player : MonoBehaviour {
             Ammo = 0;
         }
 
+        AmmoText.text = "Magazine: " + CurrentMagazine.ToString() + "/ Ammo:" + Ammo.ToString();
+
         Reload = false;
     }
 
     public void TakeDamage(int Damage)
     {
         Health -= Damage;
-        SetHealthText();
+
+        HealthText.text = "HP: " + Health.ToString();
+
         if (Health <= 0)
         {
             SceneManager.LoadScene("Menu");
         }
     }
 
-    void SetHealthText()
+    private bool isGrounded()
     {
-        HealthText.text = "HP: " + Health.ToString();
+        return Physics.Raycast(transform.position, -Vector3.up, GroundDistance + 0.1f);
     }
 }
